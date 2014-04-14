@@ -1,6 +1,16 @@
+module Off_Road
+  def go_off_road
+    puts "We're off roading!"
+  end
+
+end
+
+
 class Vehicle
-  def self.gas_mileage(gallons, miles)
-    puts "#{miles/gallons} per mile is your mileage."
+  @@vehicles_created = 0
+
+  def self.how_many_created
+    puts @@vehicles_created
   end
 
   def speed_up(amount)
@@ -26,14 +36,45 @@ class Vehicle
     self.color = color
   end
 
+  def age
+    age_of_vehicle
+  end
+
+
+  private
+
+  def age_of_vehicle
+    Time.new.year.to_i - @year
+  end
+
+
 end
 
-class MyCar < Vehicle
+class MyTruck < Vehicle
+  attr_accessor :color, :model, :current_speed
+  attr_reader :year
 
+  include Off_Road
+
+  def initialize(year, color, model)
+    @@vehicles_created += 1
+    @year = year
+    self.color = color
+    self.model = model
+    @current_speed = 0
+  end
+
+
+
+end
+
+
+class MyCar < Vehicle
   attr_accessor :color, :model, :current_speed
   attr_reader :year
 
   def initialize(year, color, model)
+    @@vehicles_created += 1
     @year = year
     self.color = color
     self.model = model
