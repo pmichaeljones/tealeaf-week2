@@ -1,19 +1,33 @@
 class Person
+  attr_accessor :name, :weight
 
-  def initialize(name="Unknown", age=0)
+  def self.speak
+    puts "This is a class method baby!"
+  end
+
+
+  def initialize(name, weight)
     @name = name
-    @age = age
+    @weight = weight
   end
 
-  def to_s
-    "Name: #{@name}, Age: #{@age}."
+  def speak
+    puts "My name is #{name}!"
   end
+
 
 end
 
-p1 = Person.new
-p2 = Person.new("John", 14)
-p3 = Person.new("",15)
-p4 = Person.new("Kyle")
+bill = Person.new("Bill", 145)
+kyle = Person.new("Kyle", 123)
+Jim = Person.new("Jim", 178)
+Person = Person.new("Walter", 144)
 
-p p1, p2, p3, p4
+
+bill.speak
+
+kyle.speak
+
+Jim.speak #looks like a class method, but it's really an instance method.
+
+Person.speak
