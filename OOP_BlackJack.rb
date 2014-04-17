@@ -39,11 +39,68 @@
 
 # Step 4. Group Methods into Classes #
 
+class Player
+
+  def hit_or_stay
+
+  end
+
+end
+
+
+class Dealer
+
+  def dealer_rules(count)  #takes current count, returns True if dealer hits and False if dealer stays
+
+  end
+
+end
+
+
+class Card
+
+end
+
+
+class Deck_of_Cards
+
+  def deal
+  end
+
+end
+
+
+class BlackJack
+
+end
+
+
+
+
+
+
+
+# This module is to be included in any class where a score needs to be evaluated
+module Scoring
+
+  def evaluate_score(cards) #passing in an array of cards as parameter
+  end
+
+end
+
+
+
+
+
 
 # -------------------------------------------------------------- #
 
 
 # Step 5. Create 'Game Engine' Class called BlackJack
+
+class BlackJack #Make a bunch of objects play nicely together
+end
+
 
 
 
