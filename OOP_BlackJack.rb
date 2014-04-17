@@ -40,17 +40,56 @@
 # Step 4. Group Methods into Classes #
 
 class Player
+  attr_accessor :name
+  attr_reader :score, :hand
 
-  def hit_or_stay
+  include Scoring
 
+  def initialize(name)
+    @name = name
+    @hand = [] #[card_object_1, card_object_2, card_object_3, etc]
+    @score = 0
   end
+
+  def score
+    evaluate_score(self.hand)
+  end
+
+  def hand=(value)
+      @hand << value
+  end
+
 
 end
 
 
 class Dealer
+  attr_reader :score, :hand
 
-  def dealer_rules(count)  #takes current count, returns True if dealer hits and False if dealer stays
+  include Scoring
+
+  def initialize
+    @name = "Mr. Dealer"
+    @hand = []
+    @score = 0
+  end
+
+  def hand=(value)
+    @hand << value
+  end
+
+  def score
+    evaluate_score(self.hand)
+  end
+
+  private
+
+  def dealer_rules  #takes current count, returns True if dealer hits and False if dealer stays
+    if self.score < 16
+      #HIT
+    elsif self.score >= 16
+      #stay
+    end
 
   end
 
@@ -58,7 +97,7 @@ end
 
 
 class Card
-  attr_accessor :name :value :suit
+  attr_accessor :name, :value, :suit
 
   def initialize(value, suit)
     @name = "#{value} of #{suit}"
@@ -86,41 +125,46 @@ class Deck
 
 
   def deal
-    puts self.cards.pop #returns 1 card
-  end
-
-  # def shuffle
-  #   3.times do
-  #     self.cards = self.cards.shuffle
-  #   end
-
-  #   return self.cards
-
-  # end
-
-
-end
-
-
-class BlackJack
-
-end
-
-
-
-
-
-
-
-# This module is to be included in any class where a score needs to be evaluated
-module Scoring
-
-  def evaluate_score(cards) #passing in an array of cards as parameter
+    self.cards.pop #returns 1 card
   end
 
 end
 
 
+
+
+
+###------START MODULES--------####
+
+
+module Scoring # This module is to be included in any class where a score needs to be evaluated
+
+  def evaluate_score(cards)
+    #an array of objects [<obj12345 Spade Ace>, <ob12345 Club King>]
+  total = 0
+  cards.each do |x|
+    if x.value == "Ace"
+      total += 11
+    elsif x.value.to_i == 0 # J, Q, K
+      total += 10
+    else
+      total += x.value.to_i
+    end
+
+  end
+
+  #correct for Aces
+  cards.select{|e| e.value == "Ace"}.count.times do
+    total -= 10 if total > 21
+  end
+
+  total
+  end
+
+end
+
+
+###-----END MODULES---------###
 
 
 
@@ -130,5 +174,11 @@ end
 
 # Step 5. Create 'Game Engine' Class called BlackJack
 
-class BlackJack #Make a bunch of objects play nicely together
+class BlackJack
+  include Scoring
+
+   def hit_or_stay
+
+  end
+
 end
