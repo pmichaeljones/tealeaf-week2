@@ -58,14 +58,46 @@ end
 
 
 class Card
+  attr_accessor :name :value :suit
+
+  def initialize(value, suit)
+    @name = "#{value} of #{suit}"
+    @value = value
+    @suit = suit
+  end
 
 end
 
 
-class Deck_of_Cards
+class Deck
+  attr_accessor :cards
+
+  def initialize
+  @cards = []
+  [2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace'].each do |value|
+    ['Diamonds', 'Hearts', 'Spades', 'Clubs'].each do |suit|
+      @cards << Card.new(value, suit)
+      @cards = @cards.shuffle
+    end #ends innder DO
+  end #ends outer DO
+
+
+  end
+
 
   def deal
+    puts self.cards.pop #returns 1 card
   end
+
+  # def shuffle
+  #   3.times do
+  #     self.cards = self.cards.shuffle
+  #   end
+
+  #   return self.cards
+
+  # end
+
 
 end
 
@@ -100,7 +132,3 @@ end
 
 class BlackJack #Make a bunch of objects play nicely together
 end
-
-
-
-
