@@ -117,14 +117,21 @@ class Dealer
 
   private
 
-  def dealer_rules  #takes current count, returns True if dealer hits and False if dealer stays
-    if self.score < 16
-      #HIT
-    elsif self.score >= 16
-      #stay
-    end
+  #FIGURE OUT DEALER TURN
 
-  end
+  # def dealer_turn  #takes current count, returns True if dealer hits and False if dealer stays
+  #   if self.score == 21
+  #     puts "Dealer got BlackJack and wins."
+  #     exit
+  #   elsif self.score < 16
+  #     puts "Dealer has less than 16 and must hit."
+  #     self.hand=
+
+  #   elsif self.score >= 16
+  #     puts "Dealer has over 17 and must stay."
+  #   end
+
+  # end
 
 end
 
