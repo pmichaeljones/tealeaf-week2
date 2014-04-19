@@ -42,56 +42,55 @@
 ###------START MODULES--------####
 
 
-module Scoring # This module is to be included in any class where a score needs to be evaluated
+# This module is to be included in any class where a score needs to be evaluated
+module Hand
+  attr_accessor :hand, :score
+
+  def initialize
+    @hand = []
+    @score = 0
+  end
 
   def evaluate_score(cards)
     #an array of objects [<obj12345 @suit = 'Spade' @value = 'Ace'>, <ob12345 @suit = 'Club', @value = 'King'>]
-  total = 0
+  self.score = 0
   cards.each do |x|
     if x.value == "Ace"
-      total += 11
+      self.score += 11
     elsif x.value.to_i == 0 # J, Q, K
-      total += 10
+      self.score += 10
     else
-      total += x.value.to_i
+      self.score += x.value.to_i
     end
 
+    end
+
+    #correct for Aces
+    cards.select{|e| e.value == "Ace"}.count.times do
+      self.score -= 10 if self.score > 21
   end
 
-  #correct for Aces
-  cards.select{|e| e.value == "Ace"}.count.times do
-    total -= 10 if total > 21
+  self.score
   end
 
-  total
+  def add_card(card)
+      self.hand << card
   end
 
 end
-
 
 
 ###-----END MODULES---------###
 
 class Player
   attr_accessor :name
-  attr_reader :score, :hand
 
-  include Scoring
+  include Hand
 
   def initialize(name)
+    super()
     @name = name
-    @hand = [] #[card_object_1, card_object_2, card_object_3, etc]
-    @score = 0
   end
-
-  def score
-    evaluate_score(self.hand)
-  end
-
-  def hand=(value)
-      @hand << value
-  end
-
 
 end
 
@@ -99,20 +98,11 @@ end
 class Dealer
   attr_reader :score, :hand
 
-  include Scoring
+  include Hand
 
   def initialize
+    super()
     @name = "Mr. Dealer"
-    @hand = []
-    @score = 0
-  end
-
-  def hand=(value)
-    @hand << value
-  end
-
-  def score
-    evaluate_score(self.hand)
   end
 
   private
@@ -179,7 +169,8 @@ end
 
 class BlackJack
   attr_accessor :player, :deck, :dealer
-  include Scoring
+  include Hand
+
 
   def initialize
     puts "Welcome. Let's get started. What's your name?"
@@ -187,45 +178,60 @@ class BlackJack
     @player = Player.new("#{name}")
     @dealer = Dealer.new()
     @deck = Deck.new()
-    @player_cards = []
-    @dealer_cards = []
   end
 
   def play_game
-    puts "Welcome, #{self.player.name}. Here is your first cards"
+    puts "Welcome, #{self.player.name}. Here is your first card."
     card1  = self.deck.deal
-    @player_cards << card1
+    self.player.add_card(card1)
     puts "You got a a #{card1.name}"
+
     card2 = self.deck.deal
-    @dealer_cards << card2
+    self.dealer.add_card(card2)
     puts "Dealer got a #{card2.name}"
+
     card3  = self.deck.deal
-    @player_cards << card3
+    self.player.add_card(card3)
     puts "You got a a #{card3.name}"
+
     card4 = self.deck.deal
-    @dealer_cards << card4
+    self.dealer.add_card(card4)
     puts "Dealer's last card is face down."
 
-    player_total = evaluate_score(@player_cards)
+    player_total = self.player.evaluate_score(self.player.hand)
     puts "Your total is #{player_total}"
 
-    while true
-      puts "Hit or Stay?"
+    next_move(self.player.hand)
+
+
+  end
+
+  def player_hit
+    card = self.deck.deal
+    self.player.add_card(card)
+    puts "You got a #{card.name}"
+    puts "Your total is now #{self.player.evaluate_score(self.player.hand)}"
+  end
+
+  def player_stay
+  end
+
+
+  def next_move(cards)
+    if self.evaluate_score(cards) > 21
+      puts "You busted. Sorry."
+    elsif self.evaluate_score(cards) == 21
+      puts "You hit BlackJack!"
+    else
+      puts "Your score is less than 21. Do you want to hit or stay?"
       response = gets.chomp.capitalize
       if response == "Hit"
-        hit_or_stay
-      elsif response == "Stay"
-        ###dealer turn
+        self.player_hit
       else
-        puts "I didn't understand."
+        self.player_stay
       end
     end
-
-
   end
 
-  def hit_or_stay
-
-  end
 
 end
