@@ -46,11 +46,6 @@
 module Hand
   attr_accessor :hand, :score
 
-  def initialize
-    @hand = []
-    @score = 0
-  end
-
   def evaluate_score(cards)
     #an array of objects [<obj12345 @suit = 'Spade' @value = 'Ace'>, <ob12345 @suit = 'Club', @value = 'King'>]
   self.score = 0
@@ -90,6 +85,8 @@ class Player
   def initialize(name)
     super()
     @name = name
+    @score =
+    @hand = []
   end
 
 end
@@ -103,6 +100,8 @@ class Dealer
   def initialize
     super()
     @name = "Mr. Dealer"
+    @hand = []
+    @score = 0
   end
 
   private
