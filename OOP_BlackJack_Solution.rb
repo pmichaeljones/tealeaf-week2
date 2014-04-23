@@ -143,6 +143,7 @@ class BlackJack
     player.name = gets.chomp
   end
 
+  #back and forth dealing for player and dealer
   def deal_cards
     player.add_card(deck.deal_one)
     dealer.add_card(deck.deal_one)
