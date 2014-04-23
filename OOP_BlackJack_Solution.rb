@@ -229,9 +229,13 @@ class BlackJack
   def who_won?
     if player.total > dealer.total
       puts "Congrats. #{player.name}'s #{player.total} beats the dealer's #{dealer.total}. #{player.name} wins!"
+    elsif player.total < dealer.total
+      puts "Sorry. The dealer's #{dealer.total} beats #{player.name}'s #{player.total}. #{player.name} loses."
     else
-      puts "Sorry. The dealer's #{dealer.total} beats #{player.name}'s #{player.score}. #{player.name} loses."
+      puts "It's a push. House wins. Sorry."
     end
+
+    exit
   end
 
 
