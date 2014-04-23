@@ -8,7 +8,7 @@ class Card
   end
 
   def pretty_output
-    "The #{face_value} of #{find_suit}."
+    "The #{face_value} of #{find_suit}"
   end
 
   def card
@@ -170,10 +170,9 @@ class BlackJack
         play_again?
       end
 
-      play_again?
     elsif player_or_dealer.is_busted?
       if player_or_dealer.is_a?(Player)
-        puts "Sorry, you busted. You lose."
+        puts "Sorry, #{player.name} busted. #{player.name} loses."
         play_again?
       elsif
         puts "Congrats, dealer busted. #{player.name} wins!"
@@ -231,6 +230,8 @@ class BlackJack
 
   def dealer_turn
     puts "Dealer's Turn."
+    puts ""
+    puts "Dealer has: #{dealer.cards[0]} and #{dealer.cards[1]}."
 
     blackjack_or_bust?(dealer)
 
