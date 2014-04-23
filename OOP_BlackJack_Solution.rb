@@ -174,7 +174,7 @@ class BlackJack
       if player_or_dealer.is_a?(Player)
         puts "Sorry, #{player.name} busted. #{player.name} loses."
         play_again?
-      elsif
+      else
         puts "Congrats, dealer busted. #{player.name} wins!"
         play_again?
       end
@@ -240,27 +240,25 @@ class BlackJack
       puts "Dealing card to dealer: #{new_card}"
       dealer.add_card(new_card)
       puts "Dealer total is now: #{dealer.total}"
-
-      blackjack_or_bust?(dealer)
     end
-    puts "Dealer has #{dealer.total}. Dealer stays."
-    who_won?
 
+    blackjack_or_bust?(dealer)
+
+    puts "Dealer stays with: #{dealer.total}."
+    who_won?
   end
 
   def who_won?
     if player.total > dealer.total
       puts "Congrats. #{player.name}'s #{player.total} beats the dealer's #{dealer.total}. #{player.name} wins!"
-      play_again?
     elsif player.total < dealer.total
       puts "Sorry. The dealer's #{dealer.total} beats #{player.name}'s #{player.total}. #{player.name} loses."
-      play_again?
     else
       puts "It's a push. House wins. Sorry."
-      play_again?
     end
 
-    exit
+    play_again?
+
   end
 
   # running this method will start the game off. It executes all other methods.
