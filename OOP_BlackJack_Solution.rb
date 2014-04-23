@@ -208,6 +208,26 @@ class BlackJack
     end
   end
 
+  def dealer_turn
+    puts "Dealer's Turn."
+
+    blackjack_or_bust(dealer)
+
+    while dealer.total < 17
+      new_card = deck.deal_one
+      puts "Dealing card to dealer: #{new_card}"
+      dealer.add_card(new_card)
+      puts "Dealer total is now: #{dealer.total}"
+
+      blackjack_or_bust(dealer)
+    end
+    puts "Dealer stays."
+  end
+
+
+
+
+
   # running this method will start the game off. It executes all other methods.
   def start
     set_player_name
