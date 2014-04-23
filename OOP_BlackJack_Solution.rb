@@ -176,7 +176,7 @@ class BlackJack
 
   end
 
-
+  # define the player's turn and logic
   def player_turn
     puts "It's #{player.name}'s turn."
 
