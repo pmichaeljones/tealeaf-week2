@@ -78,7 +78,7 @@ module Hand
 
     #correct for aces
     face_values.select{|val| val == "Ace"}.count.times do
-      break if total <= 21
+      break if total <= BlackJack::BLACKJACK_AMOUNT
       total -= 10
     end
 
@@ -87,7 +87,7 @@ module Hand
   end
 
   def is_busted?
-    total > 21
+    total > BlackJack::BLACKJACK_AMOUNT
   end
 
   def add_card(new_card)
@@ -131,6 +131,9 @@ end
 class BlackJack
   attr_accessor :player, :deck, :dealer
 
+  BLACKJACK_AMOUNT = 21
+  DEALER_HIT_MIN = 17
+
   def initialize
     @deck = Deck.new
     @player = Player.new("Player1")
@@ -158,27 +161,43 @@ class BlackJack
 
   # checking for score busting
   def blackjack_or_bust?(player_or_dealer)
-    if player_or_dealer.total == 21
+    if player_or_dealer.total == BLACKJACK_AMOUNT
       if player_or_dealer.is_a?(Dealer)
         puts "Sorry, dealer hit BlackJack. #{player.name} loses."
-        exit
+        play_again?
       else
         puts "Congrats. #{player.name} hit BlackJack. #{player.name} wins!"
-        exit
+        play_again?
       end
 
-      exit
+      play_again?
     elsif player_or_dealer.is_busted?
       if player_or_dealer.is_a?(Player)
         puts "Sorry, you busted. You lose."
-        exit
+        play_again?
       elsif
         puts "Congrats, dealer busted. #{player.name} wins!"
-        exit
+        play_again?
       end
     end
 
   end
+
+  def play_again?
+    puts ""
+    puts "Would you like to play again? 1)Yes 2)No"
+    if gets.chomp == "1"
+      puts "Starting new game..."
+      deck = Deck.new
+      player.cards = []
+      dealer.cards = []
+      start
+    else
+      puts "Goodbye!"
+      exit
+    end
+  end
+
 
   # define the player's turn and logic
   def player_turn
@@ -215,7 +234,7 @@ class BlackJack
 
     blackjack_or_bust?(dealer)
 
-    while dealer.total < 17
+    while dealer.total < DEALER_HIT_MIN
       new_card = deck.deal_one
       puts "Dealing card to dealer: #{new_card}"
       dealer.add_card(new_card)
@@ -237,9 +256,6 @@ class BlackJack
 
     exit
   end
-
-
-
 
   # running this method will start the game off. It executes all other methods.
   def start
