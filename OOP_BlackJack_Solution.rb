@@ -206,7 +206,7 @@ class BlackJack
     end
   end
 
-
+  # running this method will start the game off. It executes all other methods.
   def start
     set_player_name
     deal_cards
