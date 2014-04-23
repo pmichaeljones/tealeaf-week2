@@ -161,18 +161,20 @@ class BlackJack
     if player_or_dealer.total == 21
       if player_or_dealer.is_a?(Dealer)
         puts "Sorry, dealer hit BlackJack. #{player.name} loses."
+        exit
       else
         puts "Congrats. #{player.name} hit BlackJack. #{player.name} wins!"
+        exit
       end
 
       exit
     elsif player_or_dealer.is_busted?
       if player_or_dealer.is_a?(Player)
         puts "Sorry, you busted. You lose."
+        exit
       elsif
         puts "Congrats, dealer busted. #{player.name} wins!"
-
-      exit
+        exit
       end
     end
 
@@ -221,9 +223,15 @@ class BlackJack
 
       blackjack_or_bust?(dealer)
     end
-    puts "Dealer stays."
+    puts "Dealer has #{dealer.total}. Dealer stays."
   end
 
+  def who_won?
+    if player.total > dealer.total
+      puts "Congrats. #{player.name} wins."
+    else
+      puts "Sorry. The dealer's #{dealer.total} beats #{player.name}'s #{player.score}. #{player.name} loses."
+  end
 
 
 
@@ -235,7 +243,7 @@ class BlackJack
     show_flop
     player_turn
     dealer_turn
-    # who_won(player, dealer)
+    who_won?
   end
 
 end
