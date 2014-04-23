@@ -234,7 +234,7 @@ class BlackJack
     deal_cards
     show_flop
     player_turn
-    # dealer_turn
+    dealer_turn
     # who_won(player, dealer)
   end
 
