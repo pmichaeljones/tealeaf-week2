@@ -211,7 +211,7 @@ class BlackJack
   def dealer_turn
     puts "Dealer's Turn."
 
-    blackjack_or_bust(dealer)
+    blackjack_or_bust?(dealer)
 
     while dealer.total < 17
       new_card = deck.deal_one
@@ -219,7 +219,7 @@ class BlackJack
       dealer.add_card(new_card)
       puts "Dealer total is now: #{dealer.total}"
 
-      blackjack_or_bust(dealer)
+      blackjack_or_bust?(dealer)
     end
     puts "Dealer stays."
   end
