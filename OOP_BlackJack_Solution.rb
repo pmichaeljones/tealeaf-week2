@@ -155,6 +155,7 @@ class BlackJack
     dealer.show_flop
   end
 
+  # checking for score busting
   def blackjack_or_bust?(player_or_dealer)
     if player_or_dealer.total == 21
       if player_or_dealer.is_a?(Dealer)
