@@ -170,7 +170,7 @@ class BlackJack
       if player_or_dealer.is_a?(Player)
         puts "Sorry, you busted. You lose."
       elsif
-        puts "Sorry, #{player.name} busted. #{player.name} loses."
+        puts "Congrats, dealer busted. #{player.name} wins!"
 
       exit
       end
