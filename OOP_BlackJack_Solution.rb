@@ -256,7 +256,6 @@ class BlackJack
     else
       puts "It's a push. House wins. Sorry."
     end
-
     play_again?
 
   end
